@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    volumes:
+      # bind mount: prometheus dir
+      - ./prometheus/:/etc/prometheus/
+    command:
+      - ./prometheus --config.file=/etc/prometheus/prometheus.yml
+    ports:
+      - '9090:9090'
+    networks:
+      - prom
+    restart: always
+
+  grafana:
+    image:
+    volumes:
+
+    command:
+    ports:
+      - 3000
+    depends_on:
+      - prometheus
+    networks:
+      - prom
+    restart: always
+
+networks:
+  prom
