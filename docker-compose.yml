@@ -1,4 +1,4 @@
-version: "3"
+version: '3.7'
 
 services:
   prometheus:
@@ -6,26 +6,34 @@ services:
     volumes:
       # bind mount: prometheus dir
       - ./prometheus/:/etc/prometheus/
-    command:
-      - ./prometheus --config.file=/etc/prometheus/prometheus.yml
     ports:
-      - '9090:9090'
+      - 9090:9090
     networks:
       - prom
     restart: always
-
-  grafana:
-    image:
+  
+  alertmanager:
+    image: prom/alertmanager:v0.25.0
     volumes:
-
-    command:
+      - ./alertmanager/:/etc/alertmanager/
     ports:
-      - 3000
-    depends_on:
-      - prometheus
+      - 9093:9093
     networks:
       - prom
     restart: always
+
+  # grafana:
+  #   image:
+  #   volumes:
+
+  #   command:
+  #   ports:
+  #     - 3000
+  #   depends_on:
+  #     - prometheus
+  #   networks:
+  #     - prom
+  #   restart: always
 
 networks:
-  prom
+  prom:
