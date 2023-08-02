@@ -6,6 +6,9 @@ services:
     volumes:
       # bind mount: prometheus dir
       - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
       - 9090:9090
     networks:
@@ -22,19 +25,23 @@ services:
   #     - prom
   #   restart: always
 
-  # grafana:
-  #   image: grafana/grafana:10.0.3
-  #   volumes:
-  #     - 
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - prometheus
-  #   env_file:
-  #     - ./grafana/env_file
-  #   networks:
-  #     - prom
-  #   restart: always
+  grafana:
+    image: grafana/grafana:10.0.3
+    volumes:
+      - grafana_data:/var/lib/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    env_file:
+      - ./grafana/config.monitoring
+    networks:
+      - prom
+    restart: always
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
 
 networks:
   prom:

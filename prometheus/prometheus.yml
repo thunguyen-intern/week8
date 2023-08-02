@@ -25,12 +25,15 @@ alerting:
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-
-  - job_name: 'prometheus'
-
-    # Override the global default and scrape targets from this job every 5 seconds.
+  - job_name: 'odoo'
+    scheme: http
+    enable_http2: false
     scrape_interval: 15s
-
+    static_configs:
+      - targets: ['localhost:80']
+  
+  - job_name: 'prometheus'
+    enable_http2: false
+    scrape_interval: 15s
     static_configs:
       - targets: ['localhost:9090']
