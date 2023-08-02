@@ -115,6 +115,8 @@ services:
 volumes:
   prometheus_data: {}
   grafana_data: {}
+  odoo_data:
+  postgresql:
 
 networks:
   prom:
