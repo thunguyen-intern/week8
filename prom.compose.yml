@@ -32,6 +32,7 @@ services:
     image: grafana/grafana:10.0.3
     volumes:
       - grafana_data:/var/lib/grafana
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
     ports:
       - 3000:3000
     depends_on:
