@@ -7,8 +7,6 @@ services:
         restart: always
         volumes:
             - odoo_data:/opt/odoo/.local/share/Odoo
-        ports:
-            - 8069
         links:
             - postgres:postgres
         depends_on:
@@ -21,8 +19,6 @@ services:
         build: .
         container_name: nginx
         image: nginx
-        ports:
-            - 80:80
         volumes:
             - ./nginx/:/etc/nginx/conf.d/
         expose:
@@ -38,7 +34,7 @@ services:
             POSTGRES_PASSWORD: odoo
             POSTGRES_HOST_AUTH_METHOD: trust
         ports:
-            - '5556:5433'
+            - 5433
         volumes:
             - ./postgresql/:/docker-entrypoint-initdb.d/
         tty: true
