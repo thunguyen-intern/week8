@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    volumes:
+      # bind mount: prometheus dir
+      - ./prometheus/:/etc/prometheus/
+    ports:
+      - 9090:9090
+    networks:
+      - prom
+    restart: always
+  
+  # alertmanager:
+  #   image: quay.io/prometheus/alertmanager
+  #   volumes:
+  #     - ./alertmanager/:/etc/alertmanager/
+  #   ports:
+  #     - 9093:9093
+  #   networks:
+  #     - prom
+  #   restart: always
+
+  # grafana:
+  #   image: grafana/grafana:10.0.3
+  #   volumes:
+  #     - 
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - prometheus
+  #   env_file:
+  #     - ./grafana/env_file
+  #   networks:
+  #     - prom
+  #   restart: always
+
+networks:
+  prom:
