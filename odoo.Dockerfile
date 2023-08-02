@@ -21,6 +21,7 @@ RUN useradd -m -d /opt/odoo -U -r -s /bin/bash ${ODOO_USER} \
     && pip install -r /opt/odoo/odoo/requirements.txt
 
 ADD /odoo/odoo.conf /etc/
+ADD wait-for-psql.py /usr/local/bin/
 
 EXPOSE 8069 8071 8072  
 
