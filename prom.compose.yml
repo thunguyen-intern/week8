@@ -38,39 +38,41 @@ services:
       mode: global
     tty: true
   
-  # alertmanager:
-  #   image: quay.io/prometheus/alertmanager
-  #   volumes:
-  #     - ./alertmanager/:/etc/alertmanager/
-  #   command:
-  #     - '--config.file=/etc/alertmanager/alertmanager.yml'
-  #     - '--storage.path=/alertmanager'
-  #   ports:
-  #     - 9093:9093
-  #   networks:
-  #     - prom
-  #   restart: always
-  #   tty: true
+  alertmanager:
+    image: quay.io/prometheus/alertmanager
+    volumes:
+      - ./alertmanager/:/etc/alertmanager/
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+    ports:
+      - 9093:9093
+    networks:
+      - prom
+    restart: always
+    tty: true
 
-  # grafana:
-  #   image: grafana/grafana:10.0.3
-  #   volumes:
-  #     - grafana_data:/var/lib/grafana
-  #     - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - prometheus
-  #   env_file:
-  #     - ./grafana/config.monitoring
-  #   networks:
-  #     - prom
-  #   restart: always
-  #   tty: true
+  grafana:
+    image: grafana/grafana:10.0.3
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    environment:
+      # - ./grafana/config.monitoring
+      - GF_SECURITY_ADMIN_USER: odoo
+      - GF_SECURITY_ADMIN_PASSWORD: odoo
+    networks:
+      - prom
+    restart: always
+    tty: true
 
 volumes:
   prometheus_data: {}
-  # grafana_data: {}
+  grafana_data: {}
 
 networks:
   prom:

@@ -14,12 +14,12 @@ rule_files:
   # - "alert.rules"
 
 # alert
-# alerting:
-#   alertmanagers:
-#   - scheme: http
-#     static_configs:
-#     - targets:
-#       - "localhost:9093"
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets:
+      - "localhost:9093"
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
@@ -35,7 +35,16 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
   
-  - job_name: 'node-exporter'
-    scrape_interval: 15s
+  - job_name: 'node'
     static_configs:
-      - targets: ['node-exporter:9100']
+      - targets: ['localhost:9100']
+    metrics_path: '/metrics'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: 'localhost:9100'
+    # Use the correct path to the os-release file
+    
