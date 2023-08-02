@@ -14,7 +14,7 @@ services:
         deploy:
             replicas: 2
         tty: true
- 
+
     nginx:
         build: .
         container_name: nginx
