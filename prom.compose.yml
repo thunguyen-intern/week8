@@ -8,22 +8,25 @@ services:
       - ./prometheus/:/etc/prometheus/
       - prometheus_data:/prometheus
     command:
-      - - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
       - 9090:9090
     networks:
       - prom
     restart: always
   
-  # alertmanager:
-  #   image: quay.io/prometheus/alertmanager
-  #   volumes:
-  #     - ./alertmanager/:/etc/alertmanager/
-  #   ports:
-  #     - 9093:9093
-  #   networks:
-  #     - prom
-  #   restart: always
+  alertmanager:
+    image: quay.io/prometheus/alertmanager
+    volumes:
+      - ./alertmanager/:/etc/alertmanager/
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+    ports:
+      - 9093:9093
+    networks:
+      - prom
+    restart: unless-stopped
 
   grafana:
     image: grafana/grafana:10.0.3
