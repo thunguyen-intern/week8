@@ -13,7 +13,7 @@ services:
     restart: always
   
   alertmanager:
-    image: prom/alertmanager:v0.25.0
+    image: quay.io/prometheus/alertmanager
     volumes:
       - ./alertmanager/:/etc/alertmanager/
     ports:
