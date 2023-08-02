@@ -22,18 +22,19 @@ services:
       - prom
     restart: always
 
-  # grafana:
-  #   image:
-  #   volumes:
-
-  #   command:
-  #   ports:
-  #     - 3000
-  #   depends_on:
-  #     - prometheus
-  #   networks:
-  #     - prom
-  #   restart: always
+  grafana:
+    image: grafana/grafana:10.0.3
+    volumes:
+      - 
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    env_file:
+      - ./grafana/env_file
+    networks:
+      - prom
+    restart: always
 
 networks:
   prom:

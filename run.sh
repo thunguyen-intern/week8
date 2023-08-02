@@ -1,5 +1,5 @@
 #!/bin/bash
 
 git add .
-git commit -m "Initial Commit"
+git commit -m "edit docker compose"
 git push origin main
