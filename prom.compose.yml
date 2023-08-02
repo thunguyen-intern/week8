@@ -63,8 +63,8 @@ services:
       - prometheus
     environment:
       # - ./grafana/config.monitoring
-      - GF_SECURITY_ADMIN_USER: odoo
-      - GF_SECURITY_ADMIN_PASSWORD: odoo
+      GF_SECURITY_ADMIN_USER: odoo
+      GF_SECURITY_ADMIN_PASSWORD: odoo
     networks:
       - prom
     restart: always
