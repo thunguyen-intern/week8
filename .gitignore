@@ -1,4 +1,6 @@
 run.sh
-.vagrant/
+
 .DS_Store
 wait-for-psql.py
+
+.vagrant/
