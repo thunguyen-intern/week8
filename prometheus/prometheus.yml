@@ -45,10 +45,8 @@ scrape_configs:
   - job_name: 'odoo'
     metrics_path: '/metrics'
     static_configs:
-    - targets: ['192.168.56.12:9090']
+    - targets: ['192.168.56.12:8069']
 
-# remote_write:
-#       - url: https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom/push
-#         basic_auth:
-#           username: 1126344
-#           password: glc_eyJvIjoiOTE1NDkwIiwibiI6InRodW5ndXllbmludGVybiIsImsiOiIwaFg1MXM3WU5KczExTW9OMjA5NEJMWGwiLCJtIjp7InIiOiJwcm9kLXVzLWVhc3QtMCJ9fQ==
+  - job_name: 'postgresql'
+    static_configs:
+      - targets: ['192.168.56.10:9187']
