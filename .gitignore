@@ -1,5 +1,5 @@
 run.sh
-./.vagrant
+.vagrant
 Vagrantfile
 wait-for-psql.py
 db.sh
