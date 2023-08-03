@@ -1,47 +1,47 @@
 version: '3.7'
 
 services:
-  odoo:
-    build:
-      context: .
-      dockerfile: odoo.Dockerfile
-    restart: always
-    volumes:
-      - odoo_data:/opt/odoo/odoo/.local/share/Odoo
-    links:
-      - db:db
-    depends_on:
-      - db
-    deploy:
-      replicas: 2
-    tty: true
+  # odoo:
+  #   build:
+  #     context: .
+  #     dockerfile: odoo.Dockerfile
+  #   restart: always
+  #   volumes:
+  #     - odoo_data:/opt/odoo/odoo/.local/share/Odoo
+  #   links:
+  #     - db:db
+  #   depends_on:
+  #     - db
+  #   deploy:
+  #     replicas: 2
+  #   tty: true
 
-  nginx:
-    container_name: nginx
-    image: nginx
-    volumes:
-      - ./nginx/:/etc/nginx/conf.d/
-      - ./prometheus.htpasswd:/etc/nginx/prometheus.htpasswd
-      - ./grafana.htpasswd:/etc/nginx/grafana.htpasswd
-    ports:
-      - 80:80
-    expose:
-      - 80
-    depends_on:
-      - odoo
+  # nginx:
+  #   container_name: nginx
+  #   image: nginx
+  #   volumes:
+  #     - ./nginx/:/etc/nginx/conf.d/
+  #     - ./prometheus.htpasswd:/etc/nginx/prometheus.htpasswd
+  #     - ./grafana.htpasswd:/etc/nginx/grafana.htpasswd
+  #   ports:
+  #     - 80:80
+  #   expose:
+  #     - 80
+  #   depends_on:
+  #     - odoo
 
-  db:
-    container_name: db
-    image: postgres:13
-    restart: unless-stopped
-    environment:
-      POSTGRES_PASSWORD: odoo
-      POSTGRES_HOST_AUTH_METHOD: trust
-    ports:
-      - 5433:5432
-    volumes:
-      - ./postgresql/:/docker-entrypoint-initdb.d/
-    tty: true
+  # db:
+  #   container_name: db
+  #   image: postgres:13
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_PASSWORD: odoo
+  #     POSTGRES_HOST_AUTH_METHOD: trust
+  #   ports:
+  #     - 5433:5432
+  #   volumes:
+  #     - ./postgresql/:/docker-entrypoint-initdb.d/
+  #   tty: true
 
   prometheus:
     image: prom/prometheus:v2.45.0
@@ -117,8 +117,8 @@ services:
 volumes:
   prometheus_data: {}
   grafana_data: {}
-  odoo_data:
-  postgresql:
+  # odoo_data:
+  # postgresql:
 
 networks:
   prom:

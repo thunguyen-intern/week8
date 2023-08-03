@@ -1,2 +1,6 @@
 run.sh
-./monitoring
+./.vagrant
+Vagrantfile
+wait-for-psql.py
+db.sh
+odoo.sh

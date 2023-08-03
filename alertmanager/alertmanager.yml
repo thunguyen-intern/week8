@@ -1,10 +1,39 @@
+## alert-manager.yml
+
+global:
+  slack_api_url: "https://hooks.slack.com/services/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"
+
 route:
-  receiver: 'slack'
+  group_by: ['instance', 'severity']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 3h
+  receiver: 'default-notifications' # Add default receiver here
+  routes:
+
+  - match:
+      severity: warning
+    receiver: 'warning-notifications'
+  - match:
+      severity: critical
+    receiver: 'critical-notifications'
 
 receivers:
-  - name: 'slack'
-#       slack_configs:
-#           - send_resolved: true
-#             username: '<username>'
-#             channel: '#<channel-name>'
-#             api_url: '<incomming-webhook-url>'
+
+  - name: 'default-notifications' # Define default receiver here
+    slack_configs:
+    - channel: "#mointoring-tutorial"
+      text: "summary: {{ .CommonAnnotations.summary }}: 
+      {{ .CommonAnnotations.description }}"
+
+  - name: 'warning-notifications'
+    slack_configs:
+    - channel: "#mointoring-tutorial"
+      text: "Warning alert: {{ .CommonAnnotations.summary }}: 
+      {{ .CommonAnnotations.description }}"
+
+  - name: 'critical-notifications'
+    slack_configs:
+    - channel: "#mointoring-tutorial"
+      text: "Critical alert: {{ .CommonAnnotations.summary }}: 
+      {{ .CommonAnnotations.description }}"
