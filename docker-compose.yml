@@ -38,12 +38,13 @@ services:
       POSTGRES_PASSWORD: odoo
       POSTGRES_HOST_AUTH_METHOD: trust
     ports:
-      - 5432
+      - 5433:5432
     volumes:
       - ./postgresql/:/docker-entrypoint-initdb.d/
     tty: true
 
   prometheus:
+    build: /monitoring
     image: prom/prometheus:v2.45.0
     volumes:
       # bind mount: prometheus dir
@@ -53,6 +54,8 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
       - 9090:9090
+    depends_on:
+      - odoo
     networks:
       - prom
     restart: always
