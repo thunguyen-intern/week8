@@ -1,6 +1,13 @@
 version: '3.7'
 
 services:
+  nginx:
+    image: nginx
+    container_name: nginx 
+    tty: true
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+
   prometheus:
     image: prom/prometheus:v2.45.0
     volumes:
@@ -9,31 +16,30 @@ services:
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--enable-feature=remote-write-receiver'
     ports:
       - 9090:9090
     networks:
       - prom
-    restart: always
+    restart: unless-stopped
     tty: true
 
   node-exporter:
+    container_name: node-exporter
     image: quay.io/prometheus/node-exporter
     volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
+      - /etc:/host/etc
+      - /usr/lib:/host/usr/lib
       - /:/host:ro,rslave
     command: 
       - '--path.rootfs=/host'
-      - '--path.procfs=/host/proc' 
-      - '--path.sysfs=/host/sys'
-      - --collector.filesystem.ignored-mount-points
-      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+      - '--no-collector.os'
+    pid: host
     ports:
       - 9100:9100
     networks:
       - prom
-    restart: always
+    restart: unless-stopped
     deploy:
       mode: global
     tty: true
@@ -67,7 +73,7 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: odoo
     networks:
       - prom
-    restart: always
+    restart: unless-stopped
     tty: true
 
 volumes:
