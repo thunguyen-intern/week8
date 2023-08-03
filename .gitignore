@@ -1,6 +1,7 @@
 run.sh
-
-.DS_Store
-wait-for-psql.py
-
 .vagrant/
+.DS_Store
+Vagrantfile
+wait-for-psql.py
+db.sh
+odoo.sh
