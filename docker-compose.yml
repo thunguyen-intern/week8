@@ -44,7 +44,6 @@ services:
     tty: true
 
   prometheus:
-    build: /monitoring
     image: prom/prometheus:v2.45.0
     volumes:
       # bind mount: prometheus dir
