@@ -18,14 +18,14 @@ Vagrant.configure("2") do |config|
   config.vm.define "host" do |host|
     host.vm.box = "ubuntu/focal64"
     host.vm.network "private_network", ip: "192.168.56.12"
-    # host.vm.network "forwarded_port", guest: 8069, host: 8069
+    host.vm.network :forwarded_port, guest: 22, host: 2203
     host.vm.provision "shell", path: "odoo.sh"
   end
 
-  config.vm.define "nginx" do |nginx|
-    nginx.vm.box = "ubuntu/focal64"
-    nginx.vm.network "private_network", ip: "192.168.56.13"
-    nginx.vm.network "forwarded_port", guest: 80, host: 80
-    nginx.vm.provision "shell", path: "nginx.sh"
-  end
+  # config.vm.define "nginx" do |nginx|
+  #   nginx.vm.box = "ubuntu/focal64"
+  #   nginx.vm.network "private_network", ip: "192.168.56.13"
+  #   nginx.vm.network "forwarded_port", guest: 80, host: 80
+  #   nginx.vm.provision "shell", path: "nginx.sh"
+  # end
 end

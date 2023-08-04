@@ -1,0 +1,11 @@
+groups:
+  - name: OdooAlerts
+    rules:
+    - alert: OdooDown
+      expr: up{job="odoo"} == 0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Odoo instance is down"
+        description: "Odoo has been down for more than 5 minutes."

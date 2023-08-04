@@ -1,13 +1,6 @@
 version: '3.7'
 
 services:
-  nginx:
-    image: nginx
-    container_name: nginx 
-    tty: true
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-
   prometheus:
     image: prom/prometheus:v2.45.0
     volumes:
@@ -81,7 +74,7 @@ services:
     ports:
       - 9187:9187
     environment:
-      DATA_SOURCE_NAME: postgresql://odoo:odoo@192.168.56.10:5432/postgres?sslmode=disable
+      DATA_SOURCE_NAME: postgresql://postgres_exporter:odoo@192.168.56.10:5432/postgres?sslmode=disable
 
 volumes:
   prometheus_data: {}
