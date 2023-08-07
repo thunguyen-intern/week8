@@ -4,7 +4,6 @@ services:
   prometheus:
     image: prom/prometheus:v2.45.0
     volumes:
-      # bind mount: prometheus dir
       - ./prometheus/:/etc/prometheus/
       - prometheus_data:/prometheus
     command:
@@ -55,13 +54,12 @@ services:
     image: grafana/grafana:10.0.3
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      # - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
     ports:
       - 3000:3000
     depends_on:
       - prometheus
     environment:
-      # - ./grafana/config.monitoring
       GF_SECURITY_ADMIN_USER: odoo
       GF_SECURITY_ADMIN_PASSWORD: odoo
     networks:
